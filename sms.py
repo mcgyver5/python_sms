@@ -1,4 +1,4 @@
-zero = ['0',' ']
+zero = [' ','0']
 one = ['.',',','\'','?','!','-','(',')','@','/',':']
 two = ['a','b','c','2']
 three = ['d','e','f','3']
@@ -35,28 +35,36 @@ old_value = ''
 curr = ''
 old_stamp = 0
 timestamp = 0
-
+answer = ''
 for line in fh:
     line = line.strip()
     values = line.split(",")
     timestamp = int(values[0])
     kpress = values[1]
-    if kpress == '10':
-        kpress = '*'
+    #if kpress == '10':
+    #    kpress = '*'
     if int(kpress) > 12:
         kpress = 'c'
-    print(timestamp - old_stamp)
     timediff = timestamp - old_stamp
     #if diff > 700, assume it is a new character
     if timediff < 700 and kpress == old_value:
         #still part of same character
         curr = curr + kpress
     else:
-        keychar = curr[0]
-        i =  len(curr)
-        c = keychar[i]
+        # keychar is like 6
+        # i might be 3
+        # curr might be 666
+        # char_list might be [mno6]
+        if len(curr) > 0:        
+            keychar = curr[0]
+            char_list = keymap[keychar]
+            i =  len(curr)
+            if len(char_list) >= i:
+                c = char_list[i-1]
+                answer = answer + c
         curr = kpress
     print(curr)
     old_stamp = timestamp
     old_value = kpress
 
+print(answer) 
