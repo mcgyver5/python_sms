@@ -12,7 +12,6 @@ star = ['@','//',':','_',';','+','&','%','*','[',']','{','}']
 command = [' ',' ']
 keymap = {'1':one,'2':two,'3':three,'4':four,'5':five,'6':six,'7':seven,'8':eight,'9':nine,'0':zero,'*':star,'c':command}
 """
-
 #define N7110_KEYPAD_ZERO_ABC_CHARS  " 0"
 #define N7110_KEYPAD_ONE_ABC_CHARS   ".,'?!\"1-()@/:"
 #define N7110_KEYPAD_TWO_ABC_CHARS   "abc2"
@@ -27,8 +26,11 @@ keymap = {'1':one,'2':two,'3':three,'4':four,'5':five,'6':six,'7':seven,'8':eigh
 #define N7110_KEYPAD_HASH_CHARS N7110_IME_METHODS
 
 """
+s = raw_input("enter csv file: ")
 
-fh = open("sms3.csv")
+#s = "sms3.csv"
+
+fh = open(s)
 
 kpress = ''
 old_value = ''
@@ -41,10 +43,10 @@ for line in fh:
     values = line.split(",")
     timestamp = int(values[0])
     kpress = values[1]
-    #if kpress == '10':
-    #    kpress = '*'
-    if int(kpress) > 12:
-        kpress = 'c'
+    if kpress == '10':
+        kpress = '*'
+    #if int(kpress) > 12:
+     #   kpress = 'c'
     timediff = timestamp - old_stamp
     #if diff > 700, assume it is a new character
     if timediff < 700 and kpress == old_value:
@@ -63,7 +65,7 @@ for line in fh:
                 c = char_list[i-1]
                 answer = answer + c
         curr = kpress
-    print(curr)
+    #print(curr)
     old_stamp = timestamp
     old_value = kpress
 
